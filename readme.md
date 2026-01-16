@@ -1,0 +1,3 @@
+# Calcolatrice
+
+![Calcolatrice](calcolatrice.png)
