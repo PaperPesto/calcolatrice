@@ -1,0 +1,309 @@
+<html>
+
+<head>
+	<title>Calcolatrice JQuery</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+
+<body>
+
+	<div id="Calcolatrice" class="bordered">
+
+  		<input id="Schermo" type="text" class="bordered container"></input>
+
+  		<div id="Pulsantiera" class="bordered container">
+  			<input id="Pulsante1" value="1" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante2" value="2" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante3" value="3" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante4" value="4" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante5" value="5" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante6" value="6" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante7" value="7" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante8" value="8" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante9" value="9" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante10" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante11" value="0" type="button" class="pulsanteNumero "></input>
+  			<input id="Pulsante12" value="." type="button" class="pulsanteNumero "></input>
+  		</div>
+
+  		<div id="Operazioni" class="bordered container">
+  			<input id="OperazionePiu" value="+" type="button" class="pulsanteOperazione"></input>
+  			<input id="OperazioneMeno" value="-" type="button" class="pulsanteOperazione"></input>
+  			<input id="OperazionePer" value="*" type="button" class="pulsanteOperazione"></input>
+  			<input id="OperazioneDiviso" value="/" type="button" class="pulsanteOperazione"></input>
+  			<input id="OperazioneUguale" value="=" type="button" class="pulsanteOperazione"></input>
+  		</div>
+  		
+
+	</div>
+
+</body>
+
+
+</html>
+
+
+
+
+
+<script>
+
+var calcolatrice = 
+{
+	valoreTemp : "",
+	valoreAttuale : 0,
+	valoreSuccessivo : 0,
+
+	somma : false,
+	sottrazione : false,
+	moltiplicazione : false,
+	divisione : false
+}
+
+function somma(a,b)
+	{
+	return a+b;
+	}
+
+function differenza(a,b)
+	{
+	return a-b;
+	}
+
+function moltiplicazione(a,b)
+	{
+	return a*b;
+	}
+
+function divisione(a,b)
+	{
+	return a/b;
+	}
+
+$('#OperazionePiu').click(function(){ return operazionePiu( 		leggiSchermo() 	)});
+$('#OperazioneMeno').click(function(){ return operazioneMeno( 		leggiSchermo() 	)});
+$('#OperazionePer').click(function(){ return operazionePer( 		leggiSchermo() 	)});
+$('#OperazioneDiviso').click(function(){ return operazioneDiviso( 	leggiSchermo() 	)});
+$('#OperazioneUguale').click(function(){ return operazioneUguale( 	leggiSchermo() 	)});
+
+$("#Pulsante1").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "1"; refresh(); });
+$("#Pulsante2").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "2"; refresh(); });
+$("#Pulsante3").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "3"; refresh(); });
+$("#Pulsante4").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "4"; refresh(); });
+$("#Pulsante5").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "5"; refresh(); });
+$("#Pulsante6").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "6"; refresh(); });
+$("#Pulsante7").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "7"; refresh(); });
+$("#Pulsante8").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "8"; refresh(); });
+$("#Pulsante9").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "9"; refresh(); });
+$("#Pulsante10").click(function() { brasa(); });
+$("#Pulsante11").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "0"; refresh(); });
+$("#Pulsante12").click(function() { calcolatrice.valoreTemp = calcolatrice.valoreTemp + "."; refresh(); });
+
+
+function inizializza()
+{
+	$("#Schermo").css("background-color", "white");
+	$("#Schermo").css("font-size", "90");
+	$("#Schermo").val("");
+
+	calcolatrice.valoreTemp = "";
+}
+
+function brasa()
+{
+	inizializza();
+	calcolatrice.valoreAttuale = 0;
+	calcolatrice.valoreSuccessivo = 0;
+	refresh();
+}
+
+function refresh()
+{
+	$("#Schermo").val(calcolatrice.valoreTemp);
+}
+
+function leggiSchermo()
+{
+	return parseFloat($("#Schermo").val());
+}
+
+function operazionePiu(numero)
+{
+	inizializza();
+
+	calcolatrice.somma = true;
+	calcolatrice.sottrazione = false;
+	calcolatrice.moltiplicazione = false;
+	calcolatrice.divisione = false;
+
+	addNumeroAttuale(numero);
+}
+
+function operazioneMeno(numero)
+{
+	inizializza();
+
+	calcolatrice.somma = false;
+	calcolatrice.sottrazione = true;
+	calcolatrice.moltiplicazione = false;
+	calcolatrice.divisione = false;
+
+	addNumeroAttuale(numero);
+}
+
+function operazionePer(numero)
+{
+	inizializza();
+
+	calcolatrice.somma = false;
+	calcolatrice.sottrazione = false;
+	calcolatrice.moltiplicazione = true;
+	calcolatrice.divisione = false;
+
+	addNumeroAttuale(numero);
+}
+
+function operazioneDiviso(numero)
+{
+	inizializza();
+
+	calcolatrice.somma = false;
+	calcolatrice.sottrazione = false;
+	calcolatrice.moltiplicazione = false;
+	calcolatrice.divisione = true;
+
+	addNumeroAttuale(numero);
+}
+
+function operazioneUguale(numero)
+{
+	addNumeroSuccessivo(numero);
+
+	var a = calcolatrice.valoreAttuale;
+	var b = calcolatrice.valoreSuccessivo;
+
+	if(calcolatrice.somma == true)
+	{
+		$("#Schermo").val(somma(a,b));	
+	}
+
+	if(calcolatrice.sottrazione == true)
+	{
+		$("#Schermo").val(differenza(a,b));	
+	}
+
+	if(calcolatrice.moltiplicazione == true)
+	{
+		$("#Schermo").val(moltiplicazione(a,b));	
+	}
+
+	if(calcolatrice.divisione == true)
+	{
+		if(calcolatrice.valoreSuccessivo != 0)
+		{
+			$("#Schermo").val(divisione(a,b));
+		}
+		else
+		{
+			$("#Schermo").css("background-color", "red");
+			$("#Schermo").css("font-size", "13");
+			$("#Schermo").val("La divisone per 0 è severamente vietata. Verrà inoltrata la violazione al dipartimento di Matematica Ulisse Dini di Firenze, con la clausola 0x0fe550");
+		}
+	}
+
+
+	
+}
+
+function addNumeroAttuale(numero)
+{
+	calcolatrice.valoreAttuale = numero;
+}
+
+function addNumeroSuccessivo(numero)
+{
+	calcolatrice.valoreSuccessivo = numero;
+}
+
+</script>
+
+
+
+
+
+
+<style>
+
+input
+{
+	font-size: 32;
+}
+
+#Calcolatrice
+{
+	width: 350;
+	height: 500;
+	background-color: #afafaa;
+}
+
+#Schermo
+{
+	width: 97%;
+	height: 25%;
+	font-size: 90;
+	padding: 10px;
+	/*display: inline-block;*/
+}
+
+#Pulsantiera
+{
+	width: 70%;
+	height: 71%;
+	float: left;
+}
+
+#Operazioni
+{
+	width: 24%;
+	height: 71%;
+	float: left;
+}
+
+#pulsante10
+{
+	background: url(creeper.png);
+	background-size: 100%;
+	opacity: 0.9;
+}
+
+.pulsanteNumero
+{
+	width: 30%;
+	height: 23%;
+	margin: 1%;
+	float: left;
+}
+
+.pulsanteOperazione
+{
+	width: 90%;
+	height: 19%;
+	margin: 1%;
+		float: left;
+		margin-left: 5%;
+}
+
+.bordered
+{
+	border-width: 1px;
+	border-style: solid;
+}
+
+.container
+{
+	margin: 1%;
+	background-color: white;
+}
+
+</style>
