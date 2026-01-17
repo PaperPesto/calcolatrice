@@ -1,3 +1,3 @@
 # Calcolatrice
 
-![Calcolatrice](calcolatrice.png)
+![Calcolatrice](/calcolatrice.png)
